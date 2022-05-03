@@ -1,0 +1,167 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "The Ultimate Book Api",
+    "version": "1.0.0",
+    "description": "This is an API with all the books ever published"
+  },
+  "servers": [{
+      "url": "/api/v1.0.0/"
+  }],
+  "paths": {
+    "/books": {
+      "get": {
+        "summary": "Get all books from database",
+        "description": "Get the full list of all the books stored in the database",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#components/schemas/booksResponseBody"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add a new book to the database",
+        "description": "Post data about a new book that will be stored in the database",
+        "requestBody": {
+          "description": "A book request object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                  "$ref": "#/components/schemas/bookRequestBody"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/components/schemas/bookResponseBody"
+            }
+          },
+          "400": {
+            "description": "Request data error",
+            "schemas": {
+              "$ref": "#components/schemas/bookErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/books/{id}": {
+      "parameters": [{
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "ID of the book that we want to match",
+        "type": "string"
+      }],
+      "get": {
+        "summary": "Get a book with a given id",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID of the book that we want to match",
+          "schema": {
+            "$ref": "#components/schemas/id"
+          }
+      }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/bookObject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "responses": {
+
+        }
+      },
+      "delete": {
+        "responses": {
+
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "id": {
+         "properties":{
+           "id": {
+             "type": "string",
+             "description": "Id of a given book"
+           }
+         }
+
+      },
+      "bookObject": {
+        "type": "object",
+        "description": "A book objects",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The id of the book"
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the book"
+          },
+          "author": {
+            "type": "string",
+            "description": "The author of the book"
+          },
+          "description": {
+            "type": "string",
+            "description": "A description of the book"
+          }
+        }
+      },
+      "booksResponseBody": {
+        "type": "array",
+        "description": "An array of bookObjects"
+
+      },
+      "bookRequestBody": {
+        "type": "object",
+        "description": "A book object without an id",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "The title of the book"
+          },
+          "author": {
+            "type": "string",
+            "description": "The author of the book"
+          },
+          "description": {
+            "type": "string",
+            "description": "A description of the book"
+          }
+        }
+      },
+      "bookErrorResponse": {
+
+      }
+    }
+  }
+
+}

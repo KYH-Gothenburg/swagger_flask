@@ -40,7 +40,7 @@ def post_books():
     book['id'] = id_
 
     books_db.append(book)
-    return Response(json.dumps(book), 200, content_type='application/json')
+    return Response(json.dumps(book), 201, content_type='application/json')
 
 
 @bp_api.put('/books/<id_>')
@@ -73,11 +73,7 @@ def put_books(id_):
     index = books_db.index(book)
     books_db[index] = request_book
 
-    # book['title'] = request_book['title']
-    # book['author'] = request_book['author']
-    # book['description'] = request_book['description']
-
-    return Response(json.dumps(request_book), 200, content_type='application/json')
+    return Response(json.dumps(request_book), 202, content_type='application/json')
 
 
 @bp_api.delete('/books/<id_>')
