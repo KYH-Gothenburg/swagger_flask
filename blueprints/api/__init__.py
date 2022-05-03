@@ -82,4 +82,20 @@ def put_books(id_):
 
 @bp_api.delete('/books/<id_>')
 def delete_book(id_):
-    pass
+    id_ = check_id_format(id_)
+    if not id_:
+        return Response(json.dumps({'Error': 'Id must be an integer'}), 400, content_type='application/json')
+
+    # Get book from database
+    book = get_book_by_id(id_)
+
+    # If no book with this id exist, give an error message
+    if not book:
+        return Response(json.dumps({'Error': f'Book with id {id_} is not present in the database'}),
+                        404, content_type='application/json')
+
+    index = books_db.index(book)
+    books_db.pop(index)
+
+    return Response(json.dumps({'Success': f'Book with id {id_} was deleted'}), 200, content_type='application/json')
+
