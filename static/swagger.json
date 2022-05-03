@@ -59,15 +59,9 @@
       }
     },
     "/books/{id}": {
-      "parameters": [{
-        "name": "id",
-        "in": "path",
-        "required": true,
-        "description": "ID of the book that we want to match",
-        "type": "string"
-      }],
       "get": {
         "summary": "Get a book with a given id",
+        "description": "This is the long description",
         "parameters": [{
           "name": "id",
           "in": "path",
@@ -91,8 +85,48 @@
         }
       },
       "put": {
+        "summary": "Change a book with a given id",
+        "description": "This is the long description",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID of the book that we want to match",
+          "schema": {
+            "$ref": "#components/schemas/id"
+          }
+      }],
         "responses": {
-
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/bookObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Content-type must be application/json",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "$ref": "#components/schemas/errorObject"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "$ref": "#components/schemas/errorObject"
+                }
+              }
+            }
+          }
         }
       },
       "delete": {
@@ -158,10 +192,16 @@
           }
         }
       },
-      "bookErrorResponse": {
-
+      "errorObject": {
+        "type": "object",
+        "description": "An object describing an error",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "The reason for the described"
+          }
+        }
       }
     }
   }
-
 }
